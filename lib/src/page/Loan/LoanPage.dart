@@ -84,7 +84,7 @@ class _LoanpageState extends State<Loanpage> {
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
                   "assets/imgs/loanimg.jpg",
-                  width: 330,
+                  width: 380,
                 ),
               ),
             ],

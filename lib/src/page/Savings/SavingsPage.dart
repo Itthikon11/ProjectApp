@@ -91,7 +91,7 @@ class _SavingspageState extends State<Savingspage> {
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
                   "assets/imgs/savingimg.jpg",
-                  width: 330,
+                  width: 380,
                 ),
               ),
             ],

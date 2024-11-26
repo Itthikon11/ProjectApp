@@ -1,3 +1,4 @@
+import 'package:appproject/src/page/Login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import '../routes.dart';
 
@@ -80,6 +81,7 @@ class _ProfileState extends State<Profilepage> {
                                       ), child: Text("ยกเลิก")),
                                   ElevatedButton(onPressed: (){
                                     Navigator.of(context).pop();
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()),);
                                   },style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.green,
                                     foregroundColor: Colors.white
