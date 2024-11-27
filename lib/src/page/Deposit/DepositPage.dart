@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class Depositpage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _DepositpageState extends State<Depositpage> {
   List<Widget> depositFields = [];
   double totalAmount = 0.0;
   List<TextEditingController> controllers = [];
-  String? _idUserError;
+  List<String?> selectedMonths = [];
 
   void addAmount(double amount) {
     setState(() {
@@ -62,8 +63,15 @@ class _DepositpageState extends State<Depositpage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              decoration: InputDecoration(labelText: "เลขสมาชิก"),
+              decoration: InputDecoration(
+                labelText: "เลขสมาชิก",
+                labelStyle: TextStyle(color: Colors.black),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
               keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
             SizedBox(height: 10),
             Expanded(
@@ -102,6 +110,9 @@ class _DepositpageState extends State<Depositpage> {
       setState(() {
         TextEditingController controller = TextEditingController();
         controllers.add(controller);
+        selectedMonths.add(null);
+
+        int fieldIndex = depositFields.length;
 
         depositFields.add(
           Padding(
@@ -113,31 +124,38 @@ class _DepositpageState extends State<Depositpage> {
                     controller: controller,
                     decoration: InputDecoration(
                       labelText: "จำนวนเงิน",
-                      errorText: _idUserError,
+                      labelStyle: TextStyle(color: Colors.black),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                     keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (value) {
                       double amount = double.tryParse(value) ?? 0.0;
                       addAmount(amount);
-                      setState(() {
-                        _idUserError = _isNumeric(value) ? null : "กรุณาใส่ตัวเลขเท่านั้น";
-                      });
                     },
                   ),
                 ),
                 SizedBox(width: 20),
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    value: selectedMonth,
+                    value: selectedMonths[fieldIndex],
                     decoration: InputDecoration(
                       labelText: 'เลือกเดือน',
+                      labelStyle: TextStyle(color: Colors.black),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                     onChanged: (String? newValue) {
                       setState(() {
-                        selectedMonth = newValue;
+                        selectedMonths[fieldIndex] = newValue;
                       });
                     },
-                    items: months.map<DropdownMenuItem<String>>((String month) {
+                    items: months
+                        .where((month) => !selectedMonths.contains(month) || selectedMonths[fieldIndex] == month)
+                        .map<DropdownMenuItem<String>>((String month) {
                       return DropdownMenuItem<String>(
                         value: month,
                         child: Text(month),
@@ -162,10 +180,8 @@ class _DepositpageState extends State<Depositpage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "ยอดรวม : ฿${totalAmount.toStringAsFixed(2)}",
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
+            Text("ยอดรวม : ฿${totalAmount.toStringAsFixed(2)}",
+                style: TextStyle(fontSize: 20, color: Colors.white)),
             ElevatedButton(
               onPressed: () {
                 showDialog(
