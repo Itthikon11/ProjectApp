@@ -29,6 +29,17 @@ class _DepositpageState extends State<Depositpage> {
   double totalAmount = 0.0;
   List<TextEditingController> controllers = [];
   List<String?> selectedMonths = [];
+  Color borderColor = Colors.grey;
+
+  void _validateInput(String input) {
+    setState(() {
+      if (RegExp(r'^[0-9]+$').hasMatch(input)) {
+        borderColor = Colors.green;
+      } else {
+        borderColor = Colors.red;
+      }
+    });
+  }
 
   void addAmount(double amount) {
     setState(() {
@@ -63,12 +74,24 @@ class _DepositpageState extends State<Depositpage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
+              onChanged: _validateInput,
               decoration: InputDecoration(
                 labelText: "เลขสมาชิก",
                 labelStyle: TextStyle(color: Colors.black),
-                border: OutlineInputBorder(
+                hintText: 'ใส่ตัวเลขเท่านั้น',
+                // border: OutlineInputBorder(
+                //   borderRadius: BorderRadius.circular(20),
+                // ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: borderColor, width: 2),
                   borderRadius: BorderRadius.circular(20),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: borderColor, width: 2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                filled: true,
+                fillColor: Colors.white,
               ),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
