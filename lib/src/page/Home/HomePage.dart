@@ -1,3 +1,4 @@
+import 'package:appproject/src/page/Cal/CalDividendPage.dart';
 import 'package:appproject/src/page/Profile/ProfilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -39,15 +40,20 @@ class _HomepageState extends State<HomePage> {
                 height: 30,
               ), 
                 onSelected: (value) {
-                if (value == 1) {}
+                if (value == 1) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Caldividendpage()),
+                  );
+                }
                 else if (value == 2) {}
                 else if (value == 3) {}
               },
               itemBuilder: (context)=>[
-                PopupMenuItem(
-                  value: 1,
-                  child: Text("คำนวณเงินปันผล"),
-                ),
+                  PopupMenuItem(
+                    value: 1,
+                    child: Text("คำนวณเงินปันผล"),
+                  ),
                 PopupMenuItem(
                   value: 2,
                   child: Text("คำนวณเงินกู้"),

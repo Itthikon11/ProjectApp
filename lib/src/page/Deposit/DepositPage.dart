@@ -94,7 +94,7 @@ class _DepositpageState extends State<Depositpage> {
                 fillColor: Colors.white,
               ),
               keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
             SizedBox(height: 10),
             Expanded(
