@@ -1,4 +1,6 @@
-import 'package:appproject/src/page/routes.dart';
+import 'package:appproject/src/page/Home/HomePage.dart';
+import 'package:appproject/src/page/Loan/LoanPage.dart';
+import 'package:appproject/src/page/Savings/SavingsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -18,11 +20,23 @@ class _CaldividendpageState extends State<Caldividendpage> {
     });
 
     if (index == 0) {
-      Navigator.pushReplacementNamed(context, AppRoute.home);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+            (Route<dynamic> route) => false,
+      );
     } else if (index == 1) {
-      Navigator.pushReplacementNamed(context, AppRoute.savings);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Savingspage()),
+            (Route<dynamic> route) => false,
+      );
     } else if (index == 2) {
-      Navigator.pushReplacementNamed(context, AppRoute.loan);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Loanpage()),
+            (Route<dynamic> route) => false,
+      );
     }
   }
 

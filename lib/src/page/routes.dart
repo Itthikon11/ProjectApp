@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'Data/PercenPage.dart';
 import 'Login/LoginPage.dart';
 import 'Home/HomePage.dart';
 import 'Loan/LoanPage.dart';
@@ -18,6 +19,7 @@ class AppRoute{
   static const CalLoan = 'CalLoan';
   static const Profile = 'Profile';
   static const Deposit = 'Deposit';
+  static const Percen = 'Percen';
 
 
   static get all => <String, WidgetBuilder>{
@@ -29,5 +31,6 @@ class AppRoute{
     CalLoan : (context) => const Calloanpage(),
     Profile : (context) => const Profilepage(),
     Deposit : (context) => const Depositpage(),
+    Percen : (context) => const Percenpage(),
   };
 }
