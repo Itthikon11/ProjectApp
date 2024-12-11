@@ -37,7 +37,7 @@ class _CaldividendpageState extends State<Caldividendpage> {
 
   void _calculateAmounts() {
     double amount = double.tryParse(_amountController.text) ?? 0.0;
-    const double baseAmount = 2000000;
+    const double baseAmount = 1000000;
 
     setState(() {
       _memberAmount = amount * 0.7;
@@ -88,12 +88,32 @@ class _CaldividendpageState extends State<Caldividendpage> {
               _buildRow("รวม", _totalAmount),
               SizedBox(height: 10),
               _buildRow("จ่ายสมาชิก", _paidMemberAmount, isPercentage: true),
+              SizedBox(height: 30),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _saveData();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  ),
+                  child: Text(
+                    "บันทึก",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: _buildMenuBar(),
     );
+  }
+
+  void _saveData() {
+    print("บันทึกข้อมูลเรียบร้อย");
   }
 
   Widget _buildRow(String label, double value, {bool isPercentage = false}) {
