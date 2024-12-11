@@ -37,6 +37,7 @@ class _CaldividendpageState extends State<Caldividendpage> {
 
   void _calculateAmounts() {
     double amount = double.tryParse(_amountController.text) ?? 0.0;
+    const double baseAmount = 2000000;
 
     setState(() {
       _memberAmount = amount * 0.7;
@@ -44,8 +45,8 @@ class _CaldividendpageState extends State<Caldividendpage> {
       _utilityAmount = amount * 0.1;
       _contributionAmount = amount * 0.3;
       _insuranceAmount = amount * 0.23;
-      _totalAmount = _memberAmount + _directorAmount + _utilityAmount + _contributionAmount + _insuranceAmount;;
-      _paidMemberAmount = amount;
+      _totalAmount = amount;
+      _paidMemberAmount = (amount / baseAmount) * 100;
     });
   }
 
@@ -70,7 +71,7 @@ class _CaldividendpageState extends State<Caldividendpage> {
                   border: OutlineInputBorder(),
                 ),
                 onChanged: (value) {
-                  _calculateAmounts(); // Recalculate amounts every time input changes
+                  _calculateAmounts();
                 },
               ),
               SizedBox(height: 30),
@@ -86,7 +87,7 @@ class _CaldividendpageState extends State<Caldividendpage> {
               SizedBox(height: 10),
               _buildRow("รวม", _totalAmount),
               SizedBox(height: 10),
-              _buildRow("จ่ายสมาชิก", _paidMemberAmount),
+              _buildRow("จ่ายสมาชิก", _paidMemberAmount, isPercentage: true),
             ],
           ),
         ),
@@ -95,7 +96,7 @@ class _CaldividendpageState extends State<Caldividendpage> {
     );
   }
 
-  Widget _buildRow(String label, double amount) {
+  Widget _buildRow(String label, double value, {bool isPercentage = false}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -114,7 +115,9 @@ class _CaldividendpageState extends State<Caldividendpage> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.symmetric(horizontal: 10),
-              hintText: amount.toStringAsFixed(2),
+              hintText: isPercentage
+                  ? "${value.toStringAsFixed(2)}%"
+                  : value.toStringAsFixed(2),
             ),
           ),
         ),
@@ -153,3 +156,4 @@ class _CaldividendpageState extends State<Caldividendpage> {
     );
   }
 }
+
