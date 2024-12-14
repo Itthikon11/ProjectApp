@@ -1,5 +1,6 @@
 import 'package:appproject/src/page/Cal/CalDividendPage.dart';
 import 'package:appproject/src/page/Data/PercenPage.dart';
+import 'package:appproject/src/page/Data/SlipPage.dart';
 import 'package:appproject/src/page/Profile/ProfilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -55,6 +56,12 @@ class _HomepageState extends State<HomePage> {
                     MaterialPageRoute(builder: (context) => Percenpage()),
                   );
                 }
+                else if (value == 5) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Slippage()),
+                  );
+                }
               },
               itemBuilder: (context)=>[
                   PopupMenuItem(
@@ -63,7 +70,7 @@ class _HomepageState extends State<HomePage> {
                   ),
                 PopupMenuItem(
                   value: 2,
-                  child: Text("รายละเอียดเงินกู้"),
+                  child: Text("เอกสารเงินกู้"),
                 ),
                 PopupMenuItem(
                   value: 3,
@@ -72,6 +79,10 @@ class _HomepageState extends State<HomePage> {
                 PopupMenuItem(
                   value: 4,
                   child: Text("เปอร์เซ็นแบ่งจ่าย"),
+                ),
+                PopupMenuItem(
+                  value: 5,
+                  child: Text("สลิปเงินฝาก"),
                 ),
               ],
             ),

@@ -14,6 +14,8 @@ class Percenpage extends StatefulWidget {
 
 class _PercenpageState extends State<Percenpage> {
   int _selectedIndex = 0;
+  List<bool> _isEditing = [false, false, false, false, false, false];
+  List<double> _values = [70, 15, 10, 3, 2, 15];
 
   void _onTabChange(int index) {
     setState(() {
@@ -53,17 +55,17 @@ class _PercenpageState extends State<Percenpage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildRow("สมาชิก", 70, isPercentage: true),
+            _buildRow("สมาชิก", _values[0], index: 0, isPercentage: true),
             SizedBox(height: 10),
-            _buildRow("กรรมการ", 15, isPercentage: true),
+            _buildRow("กรรมการ", _values[1], index: 1, isPercentage: true),
             SizedBox(height: 10),
-            _buildRow("สาธารณูปโภค", 10, isPercentage: true),
+            _buildRow("สาธารณูปโภค", _values[2], index: 2, isPercentage: true),
             SizedBox(height: 10),
-            _buildRow("สมทบทุน", 3, isPercentage: true),
+            _buildRow("สมทบทุน", _values[3], index: 3, isPercentage: true),
             SizedBox(height: 10),
-            _buildRow("ประกันเสียง", 2, isPercentage: true),
+            _buildRow("ประกันเสียง", _values[4], index: 4, isPercentage: true),
             SizedBox(height: 30),
-            _buildRow("เปอร์เซ็นเงินกู้", 15, isPercentage: true),
+            _buildRow("เปอร์เซ็นเงินกู้", _values[5], index: 5, isPercentage: true),
           ],
         ),
       ),
@@ -71,7 +73,9 @@ class _PercenpageState extends State<Percenpage> {
     );
   }
 
-  Widget _buildRow(String label, double value, {bool isPercentage = false}) {
+  Widget _buildRow(String label, double value, {bool isPercentage = false, required int index}) {
+    TextEditingController _controller = TextEditingController(text: isPercentage ? "${value.toStringAsFixed(1)}%" : value.toStringAsFixed(1));
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -86,7 +90,8 @@ class _PercenpageState extends State<Percenpage> {
         Expanded(
           flex: 3,
           child: TextField(
-            enabled: false,
+            controller: _controller,
+            enabled: _isEditing[index],
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -94,19 +99,25 @@ class _PercenpageState extends State<Percenpage> {
                   ? "${value.toStringAsFixed(1)}%"
                   : value.toStringAsFixed(1),
             ),
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
           ),
         ),
         SizedBox(width: 10),
         ElevatedButton(
           onPressed: () {
             setState(() {
-
+              if (_isEditing[index]) {
+                // If editing, save the new value and append %
+                double newValue = double.tryParse(_controller.text.replaceAll('%', '')) ?? value;
+                _values[index] = newValue;
+              }
+              _isEditing[index] = !_isEditing[index];
             });
           },
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.black, backgroundColor: Colors.yellow,
           ),
-          child: Text("แก้ไข"),
+          child: Text(_isEditing[index] ? "บันทึก" : "แก้ไข"),
         ),
       ],
     );
